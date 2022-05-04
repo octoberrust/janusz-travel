@@ -9,8 +9,8 @@ import * as L from 'leaflet';
 export class MapComponent implements AfterViewInit  {
 
   // @ts-ignore
-  private map;
-
+  private map:L.Map;
+  arr:any[]=[];
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 39.8282, -98.5795 ],
@@ -24,6 +24,14 @@ export class MapComponent implements AfterViewInit  {
     });
 
     tiles.addTo(this.map);
+    this.map.addEventListener("click", (e:any) => {
+      debugger;
+      if (e.latlng) {
+        const { latlng } = e;
+        this.arr.push(latlng);
+      }
+      console.dir(e);
+    });
 
   }
 
@@ -31,6 +39,9 @@ export class MapComponent implements AfterViewInit  {
 
   ngAfterViewInit(): void {
     this.initMap();
+  }
+    create() {
+    debugger
   }
 
 }
