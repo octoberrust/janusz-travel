@@ -17,12 +17,15 @@ export class MapComponent implements AfterViewInit  {
       zoom: 3
     });
 
+
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       minZoom: 3,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
-
+//   const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=$
+    //@asymmetrik/ngx-leaflet
+    //https://github.com/Asymmetrik/ngx-leaflet#extensions
     tiles.addTo(this.map);
     this.map.addEventListener("click", (e:any) => {
       debugger;
@@ -39,6 +42,7 @@ export class MapComponent implements AfterViewInit  {
 
   ngAfterViewInit(): void {
     this.initMap();
+    const cmarker = new L.CircleMarker(L.latLng(65, 65)).addTo(this.map);
   }
     create() {
     debugger
