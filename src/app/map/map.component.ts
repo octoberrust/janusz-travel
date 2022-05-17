@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { HttpClient } from  '@angular/common/http';
 import * as L from 'leaflet';
 
 @Component({
@@ -26,11 +27,15 @@ export class MapComponent implements AfterViewInit  {
 //   const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=$
     //@asymmetrik/ngx-leaflet
     //https://github.com/Asymmetrik/ngx-leaflet#extensions
+    //https://www.mylpg.eu/lpg-station-route-planner/
     tiles.addTo(this.map);
     this.map.addEventListener("click", (e:any) => {
       debugger;
       if (e.latlng) {
         const { latlng } = e;
+        debugger
+        const {lat,lng}=latlng;
+        this.check(latlng);
         this.arr.push(latlng);
       }
       console.dir(e);
@@ -38,14 +43,25 @@ export class MapComponent implements AfterViewInit  {
 
   }
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
+
 
   ngAfterViewInit(): void {
     this.initMap();
     const cmarker = new L.CircleMarker(L.latLng(65, 65)).addTo(this.map);
   }
     create() {
+     // return this.httpClient.get('url');
     debugger
   }
+check(latlng:any)
+{
+  const {lat,lng}=latlng;
+const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+  this.http.get(url).subscribe(d=>{
+debugger;
+console.dir(d);
 
+  });
+}
 }
